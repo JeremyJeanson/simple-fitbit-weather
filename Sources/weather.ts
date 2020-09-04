@@ -8,9 +8,9 @@ import * as weatherbit from "./Providers/weatherbit";
 
 // Functions of supported providers
 const fetchFuncs = {
-    [Providers.openweathermap]: openWMWeatherMap.fetch,
-    [Providers.darksky]: darkskyWeather.fetch,
-    [Providers.weatherbit]: weatherbit.fetch
+    [Providers.openweathermap]: openWMWeatherMap.fetchWeather,
+    [Providers.darksky]: darkskyWeather.fetchWeather,
+    [Providers.weatherbit]: weatherbit.fetchWeather
 }
 
 // Get weather
