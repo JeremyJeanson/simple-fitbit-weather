@@ -11,6 +11,6 @@
   },
   "scripts": {
     "build":"@powershell Copy-Item -Path ./package.json,../README.md -Destination ../distribution/ && tsc --build",
-    "clean": "tsc --build --clean && @powershell Remove-Item ../distribution/*.*"
+    "clean": "tsc --build --clean"
   }
 }
