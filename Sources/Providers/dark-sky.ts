@@ -1,6 +1,6 @@
 import { Conditions, Weather } from "../common";
 
-let mapping_codes = {
+const mapping_codes = {
     'clear-day': Conditions.ClearSky,
     'clear-night': Conditions.ClearSky,
     'partly-cloudy-day': Conditions.FewClouds,
