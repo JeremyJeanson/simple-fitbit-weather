@@ -1,5 +1,3 @@
-import { existsSync, readFileSync } from "fs";
-
 // File name
 export const WEATHER_FILE = "weather.cbor";
 
@@ -43,19 +41,4 @@ export interface Weather {
     sunrise: number;
     sunset: number;
     timestamp: number;
-}
-
-// Load file if available
-export function loadFile(): Weather {
-    try {
-        // Test if file exists
-        if (existsSync(WEATHER_FILE)) {
-            return readFileSync(WEATHER_FILE, "cbor");
-        }
-    }
-    catch (ex) {
-        // Log error
-        console.error(JSON.stringify(ex));
-    }
-    return undefined;
 }

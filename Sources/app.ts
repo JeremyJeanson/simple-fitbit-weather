@@ -1,5 +1,6 @@
 import { inbox } from "file-transfer"
-import { WEATHER_FILE, Weather, loadFile } from "./common";
+import { WEATHER_FILE, Weather } from "./common";
+import { existsSync, readFileSync } from "fs";
 
 // Callback to send data to the application
 let _callback: (data: Weather) => void;
@@ -29,4 +30,19 @@ function loadFileAndNotifyUpdate() {
     const weather = loadFile();
     // notify the application
     _callback(weather);
+}
+
+// Load file if available
+export function loadFile(): Weather {
+    try {
+        // Test if file exists
+        if (existsSync(WEATHER_FILE)) {
+            return readFileSync(WEATHER_FILE, "cbor");
+        }
+    }
+    catch (ex) {
+        // Log error
+        console.error(JSON.stringify(ex));
+    }
+    return undefined;
 }
