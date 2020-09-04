@@ -1,5 +1,5 @@
 declare module "simple-fitbit-weather/app" {
-    export interface Weather {
+    interface Weather {
         temperatureC: number;
         temperatureF: number;
         location: string;

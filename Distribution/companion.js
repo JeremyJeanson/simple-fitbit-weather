@@ -1,10 +1,12 @@
 import { me as companion } from "companion";
 import { outbox } from "file-transfer";
 import * as cbor from "cbor";
-import { writeFileSync } from "fs";
-import { WEATHER_FILE, loadFile } from "./common";
+import { localStorage } from "local-storage";
+import { WEATHER_FILE } from "./common";
 import * as weatherClient from "./weather";
+export { Providers } from "./common";
 var MILLISECONDS_PER_MINUTE = 1000 * 60;
+var STORAGE_KEY = "weather";
 var _configuration;
 export function initialize(configuration) {
     _configuration = configuration;
@@ -20,20 +22,35 @@ export function initialize(configuration) {
     refresh();
 }
 export function refresh() {
-    var cachedWeather = loadFile();
+    var cachedWeather = loadCache();
     if (cachedWeather === undefined
         || cachedWeather.timestamp + _configuration.maximumAge < Date.now()) {
-        weatherClient.fetchWeather(_configuration.provider, _configuration.apiKy)
-            .then(function (data) { return saveAndSend(data); })
+        weatherClient.fetchWeather(_configuration.provider, _configuration.apiKey)
+            .then(function (data) { return cacheAndSend(data); })
             .catch(function (error) { return console.error(JSON.stringify(error)); });
     }
 }
-function saveAndSend(data) {
+function loadCache() {
     try {
-        writeFileSync(WEATHER_FILE, data, "cbor");
+        var str = localStorage.getItem(STORAGE_KEY);
+        if (str === null)
+            return undefined;
+        var weatcher = JSON.parse(str);
+        if (str === null)
+            return undefined;
+        return weatcher;
     }
     catch (error) {
-        console.error(JSON.stringify(error));
+        console.warn("Load weather file error : " + JSON.stringify(error));
+        return undefined;
+    }
+}
+function cacheAndSend(data) {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    catch (error) {
+        console.error("Set weather cache error :" + JSON.stringify(error));
     }
     outbox.enqueue(WEATHER_FILE, cbor.encode(data));
 }

@@ -2,6 +2,9 @@ import { inbox } from "file-transfer"
 import { WEATHER_FILE, Weather } from "./common";
 import { existsSync, readFileSync } from "fs";
 
+// Export to allow device app to use common types
+export { Weather } from "./common";
+
 // Callback to send data to the application
 let _callback: (data: Weather) => void;
 

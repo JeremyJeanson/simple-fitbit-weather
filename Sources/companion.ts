@@ -2,8 +2,11 @@ import { me as companion } from "companion";
 import { outbox } from "file-transfer";
 import * as cbor from "cbor";
 import { localStorage } from "local-storage";
-import { WEATHER_FILE, Configuration, Weather } from "./common";
+import { WEATHER_FILE, Configuration, Providers, Weather } from "./common";
 import * as weatherClient from "./weather";
+
+// Export to allow companion app to use common types
+export { Configuration, Providers } from "./common";
 
 const MILLISECONDS_PER_MINUTE = 1000 * 60;
 const STORAGE_KEY = "weather";
@@ -41,7 +44,7 @@ export function refresh() {
     if (cachedWeather === undefined
         || cachedWeather.timestamp + _configuration.maximumAge < Date.now()) {
         // Call the api 
-        weatherClient.fetchWeather(_configuration.provider, _configuration.apiKy)
+        weatherClient.fetchWeather(_configuration.provider, _configuration.apiKey)
             .then(data => cacheAndSend(data))
             .catch(error => console.error(JSON.stringify(error)));
     }
@@ -50,7 +53,11 @@ export function refresh() {
 // Load weather from cache
 function loadCache(): Weather {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const str = localStorage.getItem(STORAGE_KEY);
+        if (str === null) return undefined;
+        const weatcher = JSON.parse(str);
+        if (str === null) return undefined;
+        return weatcher;
     }
     catch (error) {
         console.warn("Load weather file error : " + JSON.stringify(error));
@@ -65,7 +72,7 @@ function cacheAndSend(data: Weather) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
     catch (error) {
-        console.error("Set weather cache error :" +JSON.stringify(error));
+        console.error("Set weather cache error :" + JSON.stringify(error));
     }
     // Encode data as cbor and send it as file
     outbox.enqueue(WEATHER_FILE, cbor.encode(data));

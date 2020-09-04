@@ -24,7 +24,7 @@ export const Conditions = {
 // Companion configuration
 export interface Configuration {
     provider: Providers;
-    apiKy: string;
+    apiKey: string;
     refreshInterval: number;
     maximumAge: number;
 }

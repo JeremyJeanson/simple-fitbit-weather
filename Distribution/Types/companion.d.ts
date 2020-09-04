@@ -7,11 +7,11 @@ declare module "simple-fitbit-weather/companion" {
     }
 
     // Configuration
-    export interface Configuration {
-        _provider: Providers;
-        _key: string;
-        _refreshInterval: number;
-        _maximumAge: number;
+    interface Configuration {
+        provider: Providers;
+        apiKey: string;
+        refreshInterval: number;
+        maximumAge: number;
     }
 
     // Initialize the module

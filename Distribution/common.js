@@ -1,4 +1,3 @@
-import { existsSync, readFileSync } from "fs";
 export var WEATHER_FILE = "weather.cbor";
 export var Providers;
 (function (Providers) {
@@ -18,14 +17,3 @@ export var Conditions = {
     Mist: 8,
     Unknown: 999999999,
 };
-export function loadFile() {
-    try {
-        if (existsSync(WEATHER_FILE)) {
-            return readFileSync(WEATHER_FILE, "cbor");
-        }
-    }
-    catch (ex) {
-        console.error(JSON.stringify(ex));
-    }
-    return undefined;
-}
