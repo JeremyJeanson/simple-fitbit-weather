@@ -17,3 +17,4 @@ export var Conditions = {
     Mist: 8,
     Unknown: 999999999,
 };
+export var MESSAGE_TYPE = "weather";

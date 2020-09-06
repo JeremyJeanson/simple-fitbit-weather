@@ -42,3 +42,11 @@ export interface Weather {
     sunset: number;
     timestamp: number;
 }
+
+export const MESSAGE_TYPE = "weather";
+
+// Message send via socket
+export interface Message {
+    type: string;
+    weather: Weather
+}

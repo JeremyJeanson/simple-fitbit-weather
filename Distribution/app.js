@@ -1,17 +1,30 @@
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { inbox } from "file-transfer";
-import { WEATHER_FILE } from "./common";
-import { existsSync, readFileSync } from "fs";
+import * as messaging from "messaging";
+import { WEATHER_FILE, MESSAGE_TYPE } from "./common";
 var _callback;
 export function initialize(callback) {
     _callback = callback;
-    inbox.onnewfile = function (e) {
-        var file = inbox.nextFile(WEATHER_FILE);
-        if (file === WEATHER_FILE) {
-            loadFileAndNotifyUpdate();
-        }
-    };
     loadFileAndNotifyUpdate();
 }
+inbox.addEventListener("newfile", function () {
+    var file = inbox.nextFile();
+    if (file === WEATHER_FILE) {
+        loadFileAndNotifyUpdate();
+    }
+});
+messaging.peerSocket.addEventListener("message", function (e) {
+    var message = e.data;
+    message.weather.description = "S";
+    if (message.type === MESSAGE_TYPE) {
+        try {
+            writeFileSync(WEATHER_FILE, message.weather, "cbor");
+        }
+        catch (error) {
+        }
+        _callback(message.weather);
+    }
+});
 function loadFileAndNotifyUpdate() {
     var weather = loadFile();
     _callback(weather);
@@ -19,7 +32,9 @@ function loadFileAndNotifyUpdate() {
 export function loadFile() {
     try {
         if (existsSync(WEATHER_FILE)) {
-            return readFileSync(WEATHER_FILE, "cbor");
+            var data = readFileSync(WEATHER_FILE, "cbor");
+            data.description = "F";
+            return data;
         }
     }
     catch (ex) {
