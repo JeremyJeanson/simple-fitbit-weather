@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { inbox } from "file-transfer";
 import * as messaging from "messaging";
-import { WEATHER_FILE, Weather, Message, MESSAGE_TYPE } from "./common";
+import { trace, WEATHER_FILE, Weather, Message, MESSAGE_TYPE } from "./common";
 
 // Export to allow device app to use common types
 export { Weather } from "./common";
@@ -14,42 +14,39 @@ export function initialize(callback: (data: Weather) => void): void {
     // Save callback
     _callback = callback;
 
-    // Load last file & Notify the application
-    loadFileAndNotifyUpdate();
+    // Load last file 
+    // & Notify the application
+    load();
 }
 
 // Add listener to wait for new file
 inbox.addEventListener("newfile", () => {
-    const file = inbox.nextFile();
     // Check the file name (in cas of error)
-    if (file === WEATHER_FILE) {
-        loadFileAndNotifyUpdate();
-    }
+    if (inbox.nextFile() === WEATHER_FILE) load();
 });
 
 // Add listener to wait for message
 messaging.peerSocket.addEventListener("message", (e) => {
     // Get message data
     const message = e.data as Message;
-    message.weather.description = "S";
+    // message.weather.description = "S";
     // Check message type
     if (message.type === MESSAGE_TYPE) {
         try {
             writeFileSync(WEATHER_FILE, message.weather, "cbor");
         }
-        catch (error) {
+        catch (ex) {
+            trace(ex);
         }
         _callback(message.weather);
     }
 });
 
-
 // Load the weather file and notifu the application of new weather data
-function loadFileAndNotifyUpdate() {
+function load() {
     // load the weather from file
-    const weather = loadFile();
-    // notify the application
-    _callback(weather);
+    // && Notify the application
+    _callback(loadFile());
 }
 
 // Load file if available
@@ -58,13 +55,13 @@ export function loadFile(): Weather {
         // Test if file exists
         if (existsSync(WEATHER_FILE)) {
             const data = readFileSync(WEATHER_FILE, "cbor") as Weather;
-            data.description = "F";
+            // data.description = "F";
             return data;
         }
     }
     catch (ex) {
         // Log error
-        console.error(JSON.stringify(ex));
+        trace(ex);
     }
     return undefined;
 }

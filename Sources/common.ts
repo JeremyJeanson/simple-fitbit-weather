@@ -1,3 +1,8 @@
+// Trace (for debug mod)
+export function trace(message:any){
+    console.warn(JSON.stringify(message));
+}
+
 // File name
 export const WEATHER_FILE = "weather.cbor";
 

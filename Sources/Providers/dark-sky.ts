@@ -28,10 +28,9 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     return
                 }
 
-                let condition = data.currently.icon
-                condition = mapping_codes[condition]
+                const condition =  mapping_codes[data.currently.icon];
 
-                var temp = data.currently.temperature
+                const temp = data.currently.temperature
 
                 const weather: Weather = {
                     temperatureC: temp,
@@ -47,7 +46,7 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                 };
 
                 // retreiving location name from Open Street Map
-                let url = 'https://nominatim.openstreetmap.org/reverse?lat=' + latitude + '&lon=' + longitude + '&format=json&accept-language=en-US'
+                const url = 'https://nominatim.openstreetmap.org/reverse?lat=' + latitude + '&lon=' + longitude + '&format=json&accept-language=en-US'
 
                 fetch(url)
                     .then(response => response.json())

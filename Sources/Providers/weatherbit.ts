@@ -59,8 +59,7 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     return;
                 }
 
-                let condition = data.data[0].weather.code
-                condition = mapping_codes[condition];
+                const condition =  mapping_codes[data.data[0].weather.code];
 
                 const temp = data.data[0].temp
 

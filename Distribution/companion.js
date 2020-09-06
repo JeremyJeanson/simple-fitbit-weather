@@ -3,7 +3,7 @@ import { outbox } from "file-transfer";
 import * as cbor from "cbor";
 import * as messaging from "messaging";
 import { localStorage } from "local-storage";
-import { WEATHER_FILE, MESSAGE_TYPE } from "./common";
+import { trace, WEATHER_FILE, MESSAGE_TYPE } from "./common";
 import * as weatherClient from "./weather";
 export { Providers } from "./common";
 var MILLISECONDS_PER_MINUTE = 1000 * 60;
@@ -11,16 +11,13 @@ var STORAGE_KEY = "weather";
 var _configuration;
 export function initialize(configuration) {
     _configuration = configuration;
-    if (companion.permissions.granted("run_background")) {
-        if (_configuration.refreshInterval >= 5) {
-            companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
-            companion.addEventListener("wakeinterval", function (e) { return refresh(); });
-        }
+    try {
+        companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
+        companion.addEventListener("wakeinterval", function (e) { return refresh(); });
     }
-    else {
-        console.warn("We're not allowed to access to run in the background!");
+    catch (ex) {
+        trace(ex);
     }
-    console.log("Weather initialized!");
     refresh();
 }
 export function refresh() {
@@ -29,7 +26,7 @@ export function refresh() {
         || cachedWeather.timestamp + (_configuration.maximumAge * 60 * 1000) <= Date.now()) {
         weatherClient.fetchWeather(_configuration.provider, _configuration.apiKey)
             .then(function (data) { return cacheAndSend(data); })
-            .catch(function (error) { return console.error(JSON.stringify(error)); });
+            .catch(function (ex) { return trace(ex); });
     }
 }
 function loadCache() {
@@ -42,8 +39,8 @@ function loadCache() {
             return undefined;
         return weatcher;
     }
-    catch (error) {
-        console.warn("Load weather file error : " + JSON.stringify(error));
+    catch (ex) {
+        trace("Load weather file error : " + ex);
         return undefined;
     }
 }
@@ -51,8 +48,8 @@ function cacheAndSend(data) {
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
-    catch (error) {
-        console.error("Set weather cache error :" + JSON.stringify(error));
+    catch (ex) {
+        trace("Set weather cache error :" + JSON.stringify(ex));
     }
     if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
         var message = {

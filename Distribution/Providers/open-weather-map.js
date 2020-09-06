@@ -53,7 +53,6 @@ var mapping_codes = {
 export function fetchWeather(apiKey, latitude, longitude) {
     return new Promise(function (resolve, reject) {
         var url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;
-        console.log(url);
         fetch(encodeURI(url))
             .then(function (response) { return response.json(); })
             .then(function (data) {
@@ -61,8 +60,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 reject(data.message);
                 return;
             }
-            var condition = data.weather[0].id;
-            condition = mapping_codes[condition];
+            var condition = mapping_codes[data.weather[0].id];
             var weather = {
                 temperatureC: data.main.temp - 273.15,
                 temperatureF: (data.main.temp - 273.15) * 9 / 5 + 32,

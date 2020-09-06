@@ -1,3 +1,6 @@
+export function trace(message) {
+    console.warn(JSON.stringify(message));
+}
 export var WEATHER_FILE = "weather.cbor";
 export var Providers;
 (function (Providers) {

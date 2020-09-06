@@ -67,8 +67,6 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
     return new Promise<Weather>((resolve, reject) => {
         const url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude
 
-        console.log(url)
-
         fetch(encodeURI(url))
             .then(response => response.json())
             .then(data => {
@@ -78,8 +76,7 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     return
                 }
 
-                let condition = data.weather[0].id
-                condition = mapping_codes[condition]
+                const condition = mapping_codes[data.weather[0].id];
 
                 const weather: Weather = {
                     temperatureC: data.main.temp - 273.15,

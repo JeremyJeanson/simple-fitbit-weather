@@ -3,7 +3,7 @@ import { outbox } from "file-transfer";
 import * as cbor from "cbor";
 import * as messaging from "messaging";
 import { localStorage } from "local-storage";
-import { WEATHER_FILE, Configuration, Providers, Weather, Message, MESSAGE_TYPE } from "./common";
+import { trace, WEATHER_FILE, Configuration, Providers, Weather, Message, MESSAGE_TYPE } from "./common";
 import * as weatherClient from "./weather";
 
 // Export to allow companion app to use common types
@@ -21,20 +21,23 @@ export function initialize(configuration: Configuration) {
     _configuration = configuration;
 
     // Chek persissions
-    if (companion.permissions.granted("run_background")) {
-        // Check interval
-        if (_configuration.refreshInterval >= 5) {
-            // We are not allow to have an interval bellow 5
-            // Set periodic refresh (interfval as minutes)
-            companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
-            companion.addEventListener("wakeinterval", (e) => refresh());
-        }
-    } else {
-        console.warn("We're not allowed to access to run in the background!");
+    // if (companion.permissions.granted("run_background")) {
+    //     // Check interval
+    //     if (_configuration.refreshInterval >= 5) {
+    //         // We are not allow to have an interval bellow 5
+    //         // Set periodic refresh (interfval as minutes)
+    //         companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
+    //         companion.addEventListener("wakeinterval", (e) => refresh());
+    //     }
+    // } else {
+    //     console.warn("We're not allowed to access to run in the background!");
+    // }
+    try {
+        companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
+        companion.addEventListener("wakeinterval", (e) => refresh());
+    } catch(ex) {
+        trace(ex)
     }
-
-    // Init
-    console.log("Weather initialized!");
 
     // Call the refresh
     refresh();
@@ -51,7 +54,7 @@ export function refresh() {
         // Call the api 
         weatherClient.fetchWeather(_configuration.provider, _configuration.apiKey)
             .then(data => cacheAndSend(data))
-            .catch(error => console.error(JSON.stringify(error)));
+            .catch(ex => trace(ex));
     }
 }
 
@@ -64,8 +67,8 @@ function loadCache(): Weather {
         if (str === null) return undefined;
         return weatcher;
     }
-    catch (error) {
-        console.warn("Load weather file error : " + JSON.stringify(error));
+    catch (ex) {
+        trace("Load weather file error : " + ex);
         return undefined;
     }
 }
@@ -76,8 +79,8 @@ function cacheAndSend(data: Weather) {
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
-    catch (error) {
-        console.error("Set weather cache error :" + JSON.stringify(error));
+    catch (ex) {
+        trace("Set weather cache error :" + JSON.stringify(ex));
     }
 
     // Test if socket is open

@@ -50,8 +50,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 reject(data.error);
                 return;
             }
-            var condition = data.data[0].weather.code;
-            condition = mapping_codes[condition];
+            var condition = mapping_codes[data.data[0].weather.code];
             var temp = data.data[0].temp;
             var weather = {
                 temperatureC: temp,

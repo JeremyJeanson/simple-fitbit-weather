@@ -22,8 +22,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 reject(data);
                 return;
             }
-            var condition = data.currently.icon;
-            condition = mapping_codes[condition];
+            var condition = mapping_codes[data.currently.icon];
             var temp = data.currently.temperature;
             var weather = {
                 temperatureC: temp,
