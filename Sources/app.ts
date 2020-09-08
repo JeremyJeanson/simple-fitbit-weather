@@ -9,7 +9,10 @@ export { Weather } from "./common";
 // Callback to send data to the application
 let _callback: (data: Weather) => void;
 
-// initialize the module
+/**
+ * Initialize the module
+ * @param callback when weater data are available
+ */
 export function initialize(callback: (data: Weather) => void): void {
     // Save callback
     _callback = callback;
@@ -19,13 +22,17 @@ export function initialize(callback: (data: Weather) => void): void {
     load();
 }
 
-// Add listener to wait for new file
+/**
+ * Add listener to wait for new file 
+ */
 inbox.addEventListener("newfile", () => {
     // Check the file name (in cas of error)
     if (inbox.nextFile() === WEATHER_FILE) load();
 });
 
-// Add listener to wait for message
+/**
+ * Add listener to wait for message
+ */
 messaging.peerSocket.addEventListener("message", (e) => {
     // Get message data
     const message = e.data as Message;
@@ -42,14 +49,18 @@ messaging.peerSocket.addEventListener("message", (e) => {
     }
 });
 
-// Load the weather file and notifu the application of new weather data
+/**
+ * Load the weather file and notifu the application of new weather data
+ */
 function load() {
     // load the weather from file
     // && Notify the application
     _callback(loadFile());
 }
 
-// Load file if available
+/**
+ * Load file if available
+ */
 export function loadFile(): Weather {
     try {
         // Test if file exists

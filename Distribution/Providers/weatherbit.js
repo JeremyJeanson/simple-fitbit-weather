@@ -64,6 +64,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 sunset: data.data[0].sunset,
                 timestamp: Date.now()
             };
+            // Send the weather data to the device
             resolve(weather);
         })
             .catch(function (e) { return reject(e.message); });

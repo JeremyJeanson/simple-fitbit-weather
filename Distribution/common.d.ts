@@ -2,40 +2,34 @@
  * Trace (for debug mod)
  * @param message to show in the console
  */
-export function trace(message:any){
-    console.warn(JSON.stringify(message));
-}
-
+export declare function trace(message: any): void;
 /**
  * File name
  */
-export const WEATHER_FILE = "weather.cbor";
-
+export declare const WEATHER_FILE = "weather.cbor";
 /**
  * Providers
  */
-export enum Providers {
+export declare enum Providers {
     openweathermap = "owm",
     darksky = "darksky",
     weatherbit = "weatherbit"
 }
-
 /**
  * Conditions
  */
-export const Conditions = {
-    ClearSky: 0,
-    FewClouds: 1,
-    ScatteredClouds: 2,
-    BrokenClouds: 3,
-    ShowerRain: 4,
-    Rain: 5,
-    Thunderstorm: 6,
-    Snow: 7,
-    Mist: 8,
-    Unknown: 999999999,
+export declare const Conditions: {
+    ClearSky: number;
+    FewClouds: number;
+    ScatteredClouds: number;
+    BrokenClouds: number;
+    ShowerRain: number;
+    Rain: number;
+    Thunderstorm: number;
+    Snow: number;
+    Mist: number;
+    Unknown: number;
 };
-
 /**
  * Companion configuration
  */
@@ -45,7 +39,6 @@ export interface Configuration {
     refreshInterval: number;
     maximumAge: number;
 }
-
 /**
  * Weather data
  */
@@ -61,16 +54,14 @@ export interface Weather {
     sunset: number;
     timestamp: number;
 }
-
 /**
  * Message type (used in socket messages)
  */
-export const MESSAGE_TYPE = "weather";
-
+export declare const MESSAGE_TYPE = "weather";
 /**
  * Message send via socket via sockets
  */
 export interface Message {
     type: string;
-    weather: Weather
+    weather: Weather;
 }

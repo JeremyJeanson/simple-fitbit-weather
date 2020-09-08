@@ -1,13 +1,26 @@
+/**
+ * Trace (for debug mod)
+ * @param message to show in the console
+ */
 export function trace(message) {
     console.warn(JSON.stringify(message));
 }
+/**
+ * File name
+ */
 export var WEATHER_FILE = "weather.cbor";
+/**
+ * Providers
+ */
 export var Providers;
 (function (Providers) {
     Providers["openweathermap"] = "owm";
     Providers["darksky"] = "darksky";
     Providers["weatherbit"] = "weatherbit";
 })(Providers || (Providers = {}));
+/**
+ * Conditions
+ */
 export var Conditions = {
     ClearSky: 0,
     FewClouds: 1,
@@ -20,4 +33,7 @@ export var Conditions = {
     Mist: 8,
     Unknown: 999999999,
 };
+/**
+ * Message type (used in socket messages)
+ */
 export var MESSAGE_TYPE = "weather";

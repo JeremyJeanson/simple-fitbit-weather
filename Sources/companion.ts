@@ -15,7 +15,10 @@ const STORAGE_KEY = "weather";
 // Current configuration
 let _configuration: Configuration;
 
-// Initialize the module
+/**
+ * Initialize the module
+ * @param configuration to use with the weather API
+ */
 export function initialize(configuration: Configuration) {
     // Save the configuration
     _configuration = configuration;
@@ -43,7 +46,9 @@ export function initialize(configuration: Configuration) {
     refresh();
 }
 
-// Refresh weather data
+/**
+ * Refresh weather data
+ */
 export function refresh() {
     // load the weather from file
     const cachedWeather = loadCache();
@@ -58,7 +63,9 @@ export function refresh() {
     }
 }
 
-// Load weather from cache
+/**
+ * Load weather from cache
+ */
 function loadCache(): Weather {
     try {
         const str = localStorage.getItem(STORAGE_KEY);
@@ -73,7 +80,10 @@ function loadCache(): Weather {
     }
 }
 
-// Send data to this device app
+/**
+ * Send data to this device app
+ * @param data to save and send to the app
+ */
 function cacheAndSend(data: Weather) {
     // Write the file to have a local cache
     try {

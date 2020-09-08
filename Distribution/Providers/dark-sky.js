@@ -36,6 +36,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 sunset: data.daily.data[0].sunsetTime * 1000,
                 timestamp: Date.now()
             };
+            // retreiving location name from Open Street Map
             var url = 'https://nominatim.openstreetmap.org/reverse?lat=' + latitude + '&lon=' + longitude + '&format=json&accept-language=en-US';
             fetch(url)
                 .then(function (response) { return response.json(); })
@@ -48,10 +49,11 @@ export function fetchWeather(apiKey, latitude, longitude) {
                     weather.location = data.address.town;
                 else if (data.address.city != undefined)
                     weather.location = data.address.city;
+                // Send the weather data to the device
                 resolve(weather);
             })
                 .catch(function () {
-                resolve(weather);
+                resolve(weather); // if location name not found - sending weather without location
             });
         })
             .catch(function (e) { return reject(e.message); });

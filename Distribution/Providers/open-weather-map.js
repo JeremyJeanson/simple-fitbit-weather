@@ -44,6 +44,11 @@ var mapping_codes = {
     721: Conditions.Mist,
     731: Conditions.Mist,
     741: Conditions.Mist,
+    // 751: ,
+    // 761: ,
+    // 762: ,
+    // 771: ,
+    // 781: ,
     800: Conditions.ClearSky,
     801: Conditions.FewClouds,
     802: Conditions.ScatteredClouds,
@@ -73,6 +78,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 sunset: data.sys.sunset * 1000,
                 timestamp: Date.now()
             };
+            // Send the weather data to the device
             resolve(weather);
         })
             .catch(function (e) { return reject(e.message); });
