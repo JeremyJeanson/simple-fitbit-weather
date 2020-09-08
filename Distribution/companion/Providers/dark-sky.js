@@ -1,4 +1,4 @@
-import { Conditions } from "../common";
+import { Conditions } from "../../common";
 var mapping_codes = {
     'clear-day': Conditions.ClearSky,
     'clear-night': Conditions.ClearSky,

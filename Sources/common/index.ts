@@ -3,7 +3,7 @@
  * @param message to show in the console
  */
 export function trace(message:any){
-    console.warn(JSON.stringify(message));
+    // console.warn(JSON.stringify(message));
 }
 
 /**

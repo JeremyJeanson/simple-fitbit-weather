@@ -1,4 +1,4 @@
-import { Conditions } from "../common";
+import { Conditions } from "../../common";
 var mapping_codes = {
     "200": Conditions.Thunderstorm,
     "201": Conditions.Thunderstorm,

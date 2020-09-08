@@ -1,4 +1,4 @@
-import { Conditions, Weather } from "../common";
+import { Conditions, Weather } from "../../common";
 
 const mapping_codes = {
     "200": Conditions.Thunderstorm,

@@ -3,26 +3,21 @@ import { outbox } from "file-transfer";
 import * as cbor from "cbor";
 import * as messaging from "messaging";
 import { localStorage } from "local-storage";
-import { trace, WEATHER_FILE, Configuration, Providers, Weather, Message, MESSAGE_TYPE } from "./common";
+import { trace, WEATHER_FILE, MESSAGE_TYPE } from "../common";
 import * as weatherClient from "./weather";
-
 // Export to allow companion app to use common types
-export { Configuration, Providers } from "./common";
-
-const MILLISECONDS_PER_MINUTE = 1000 * 60;
-const STORAGE_KEY = "weather";
-
+export { Providers } from "../common";
+var MILLISECONDS_PER_MINUTE = 1000 * 60;
+var STORAGE_KEY = "weather";
 // Current configuration
-let _configuration: Configuration;
-
+var _configuration;
 /**
  * Initialize the module
  * @param configuration to use with the weather API
  */
-export function initialize(configuration: Configuration) {
+export function initialize(configuration) {
     // Save the configuration
     _configuration = configuration;
-
     // Chek persissions
     // if (companion.permissions.granted("run_background")) {
     //     // Check interval
@@ -37,41 +32,40 @@ export function initialize(configuration: Configuration) {
     // }
     try {
         companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
-        companion.addEventListener("wakeinterval", (e) => refresh());
-    } catch(ex) {
-        trace(ex)
+        companion.addEventListener("wakeinterval", function (e) { return refresh(); });
     }
-
+    catch (ex) {
+        trace(ex);
+    }
     // Call the refresh
     refresh();
 }
-
 /**
  * Refresh weather data
  */
 export function refresh() {
     // load the weather from file
-    const cachedWeather = loadCache();
-
+    var cachedWeather = loadCache();
     // Update if data are too old or undfined
     if (cachedWeather === undefined
         || cachedWeather.timestamp + (_configuration.maximumAge * 60 * 1000) <= Date.now()) {
         // Call the api 
         weatherClient.fetchWeather(_configuration.provider, _configuration.apiKey)
-            .then(data => cacheAndSend(data))
-            .catch(ex => trace(ex));
+            .then(function (data) { return cacheAndSend(data); })
+            .catch(function (ex) { return trace(ex); });
     }
 }
-
 /**
  * Load weather from cache
  */
-function loadCache(): Weather {
+function loadCache() {
     try {
-        const str = localStorage.getItem(STORAGE_KEY);
-        if (str === null) return undefined;
-        const weatcher = JSON.parse(str);
-        if (str === null) return undefined;
+        var str = localStorage.getItem(STORAGE_KEY);
+        if (str === null)
+            return undefined;
+        var weatcher = JSON.parse(str);
+        if (str === null)
+            return undefined;
         return weatcher;
     }
     catch (ex) {
@@ -79,12 +73,11 @@ function loadCache(): Weather {
         return undefined;
     }
 }
-
 /**
  * Send data to this device app
  * @param data to save and send to the app
  */
-function cacheAndSend(data: Weather) {
+function cacheAndSend(data) {
     // Write the file to have a local cache
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -92,11 +85,10 @@ function cacheAndSend(data: Weather) {
     catch (ex) {
         trace("Set weather cache error :" + JSON.stringify(ex));
     }
-
     // Test if socket is open
     if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
         // Send via socket
-        const message: Message = {
+        var message = {
             type: MESSAGE_TYPE,
             weather: data
         };

@@ -1,5 +1,5 @@
-import { Weather } from "./common";
-export { Weather } from "./common";
+import { Weather } from "../common";
+export { Weather } from "../common";
 /**
  * Initialize the module
  * @param callback when weater data are available
