@@ -8,12 +8,15 @@ export declare function trace(message: any): void;
  */
 export declare const WEATHER_FILE = "weather.cbor";
 /**
- * Providers
+ * Message type (used in socket messages)
  */
-export declare enum Providers {
-    openweathermap = "owm",
-    darksky = "darksky",
-    weatherbit = "weatherbit"
+export declare const MESSAGE_TYPE = "weather";
+/**
+ * Message send via socket via sockets
+ */
+export interface Message {
+    type: string;
+    weather: Weather;
 }
 /**
  * Conditions
@@ -31,15 +34,6 @@ export declare const Conditions: {
     Unknown: number;
 };
 /**
- * Companion configuration
- */
-export interface Configuration {
-    provider: Providers;
-    apiKey: string;
-    refreshInterval: number;
-    maximumAge: number;
-}
-/**
  * Weather data
  */
 export interface Weather {
@@ -53,15 +47,4 @@ export interface Weather {
     sunrise: number;
     sunset: number;
     timestamp: number;
-}
-/**
- * Message type (used in socket messages)
- */
-export declare const MESSAGE_TYPE = "weather";
-/**
- * Message send via socket via sockets
- */
-export interface Message {
-    type: string;
-    weather: Weather;
 }

@@ -6,7 +6,7 @@ import { localStorage } from "local-storage";
 import { trace, WEATHER_FILE, MESSAGE_TYPE } from "../common";
 import * as weatherClient from "./weather";
 // Export to allow companion app to use common types
-export { Providers } from "../common";
+export { Providers } from "./types";
 var MILLISECONDS_PER_MINUTE = 1000 * 60;
 var STORAGE_KEY = "weather";
 // Current configuration

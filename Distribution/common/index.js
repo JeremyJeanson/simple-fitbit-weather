@@ -10,14 +10,9 @@ export function trace(message) {
  */
 export var WEATHER_FILE = "weather.cbor";
 /**
- * Providers
+ * Message type (used in socket messages)
  */
-export var Providers;
-(function (Providers) {
-    Providers["openweathermap"] = "owm";
-    Providers["darksky"] = "darksky";
-    Providers["weatherbit"] = "weatherbit";
-})(Providers || (Providers = {}));
+export var MESSAGE_TYPE = "weather";
 /**
  * Conditions
  */
@@ -33,7 +28,3 @@ export var Conditions = {
     Mist: 8,
     Unknown: 9,
 };
-/**
- * Message type (used in socket messages)
- */
-export var MESSAGE_TYPE = "weather";

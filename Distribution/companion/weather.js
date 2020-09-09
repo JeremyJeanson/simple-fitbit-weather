@@ -1,5 +1,5 @@
 var _a;
-import { Providers } from "../common";
+import { Providers } from "./types";
 import { geolocation } from "geolocation";
 // Import providers
 import * as openWMWeatherMap from "./Providers/open-weather-map";
