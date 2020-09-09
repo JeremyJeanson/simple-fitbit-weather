@@ -1,5 +1,5 @@
-import { Configuration } from "./types";
-export { Configuration, Providers } from "./types";
+import { Configuration } from "./common";
+export { Configuration, Providers } from "./common";
 /**
  * Initialize the module
  * @param configuration to use with the weather API

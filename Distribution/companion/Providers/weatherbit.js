@@ -50,7 +50,9 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 reject(data.error);
                 return;
             }
-            var condition = mapping_codes[data.data[0].weather.code];
+            var conditionCode = mapping_codes[data.data[0].weather.code];
+            if (conditionCode === undefined)
+                conditionCode = Conditions.Unknown;
             var temp = data.data[0].temp;
             var weather = {
                 temperatureC: temp,
@@ -58,7 +60,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 location: data.data[0].city_name,
                 description: data.data[0].weather.description,
                 isDay: data.data[0].weather.icon.endsWith("d"),
-                conditionCode: condition !== undefined ? condition : Conditions.Unknown,
+                conditionCode: conditionCode,
                 realConditionCode: data.data[0].weather.code,
                 sunrise: data.data[0].sunrise,
                 sunset: data.data[0].sunset,

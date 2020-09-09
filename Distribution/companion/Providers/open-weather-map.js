@@ -44,11 +44,6 @@ var mapping_codes = {
     721: Conditions.Mist,
     731: Conditions.Mist,
     741: Conditions.Mist,
-    // 751: ,
-    // 761: ,
-    // 762: ,
-    // 771: ,
-    // 781: ,
     800: Conditions.ClearSky,
     801: Conditions.FewClouds,
     802: Conditions.ScatteredClouds,
@@ -65,14 +60,16 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 reject(data.message);
                 return;
             }
-            var condition = mapping_codes[data.weather[0].id];
+            var conditionCode = mapping_codes[data.weather[0].id];
+            if (conditionCode === undefined)
+                conditionCode = Conditions.Unknown;
             var weather = {
                 temperatureC: data.main.temp - 273.15,
                 temperatureF: (data.main.temp - 273.15) * 9 / 5 + 32,
                 location: data.name,
                 description: data.weather[0].description,
                 isDay: (data.dt > data.sys.sunrise && data.dt < data.sys.sunset),
-                conditionCode: condition !== undefined ? condition : Conditions.Unknown,
+                conditionCode: conditionCode,
                 realConditionCode: data.weather[0].id,
                 sunrise: data.sys.sunrise * 1000,
                 sunset: data.sys.sunset * 1000,

@@ -4,11 +4,11 @@ import * as cbor from "cbor";
 import * as messaging from "messaging";
 import { localStorage } from "local-storage";
 import { trace, WEATHER_FILE, Weather, Message, MESSAGE_TYPE } from "../common";
-import { Configuration, Providers } from "./types";
+import { Configuration, Providers } from "./common";
 import * as weatherClient from "./weather";
 
 // Export to allow companion app to use common types
-export { Configuration, Providers } from "./types";
+export { Configuration, Providers } from "./common";
 
 const MILLISECONDS_PER_MINUTE = 1000 * 60;
 const STORAGE_KEY = "weather";

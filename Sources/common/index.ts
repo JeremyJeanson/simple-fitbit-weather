@@ -2,7 +2,7 @@
  * Trace (for debug mod)
  * @param message to show in the console
  */
-export function trace(message:any){
+export function trace(message: any) {
     // console.warn(JSON.stringify(message));
 }
 

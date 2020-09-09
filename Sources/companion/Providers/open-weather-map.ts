@@ -11,7 +11,6 @@ const mapping_codes = {
     230: Conditions.Thunderstorm,
     231: Conditions.Thunderstorm,
     232: Conditions.Thunderstorm,
-
     300: Conditions.Snow,
     301: Conditions.Snow,
     302: Conditions.Snow,
@@ -21,7 +20,6 @@ const mapping_codes = {
     313: Conditions.Snow,
     314: Conditions.Snow,
     321: Conditions.Snow,
-
     500: Conditions.Rain,
     501: Conditions.Rain,
     502: Conditions.Rain,
@@ -32,7 +30,6 @@ const mapping_codes = {
     521: Conditions.ShowerRain,
     522: Conditions.ShowerRain,
     531: Conditions.ShowerRain,
-
     600: Conditions.Snow,
     601: Conditions.Snow,
     602: Conditions.Snow,
@@ -43,20 +40,12 @@ const mapping_codes = {
     620: Conditions.Snow,
     621: Conditions.Snow,
     622: Conditions.Snow,
-
     701: Conditions.Mist,
     711: Conditions.Mist,
     721: Conditions.Mist,
     731: Conditions.Mist,
     741: Conditions.Mist,
-    // 751: ,
-    // 761: ,
-    // 762: ,
-    // 771: ,
-    // 781: ,
-
     800: Conditions.ClearSky,
-
     801: Conditions.FewClouds,
     802: Conditions.ScatteredClouds,
     803: Conditions.BrokenClouds,
@@ -76,7 +65,8 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     return
                 }
 
-                const condition = mapping_codes[data.weather[0].id];
+                let conditionCode = mapping_codes[data.weather[0].id];
+                if (conditionCode === undefined) conditionCode = Conditions.Unknown;
 
                 const weather: Weather = {
                     temperatureC: data.main.temp - 273.15,
@@ -84,7 +74,7 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     location: data.name,
                     description: data.weather[0].description,
                     isDay: (data.dt > data.sys.sunrise && data.dt < data.sys.sunset),
-                    conditionCode: condition !== undefined ? condition : Conditions.Unknown,
+                    conditionCode: conditionCode,
                     realConditionCode: data.weather[0].id,
                     sunrise: data.sys.sunrise * 1000,
                     sunset: data.sys.sunset * 1000,

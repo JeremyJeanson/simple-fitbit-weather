@@ -22,7 +22,9 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 reject(data);
                 return;
             }
-            var condition = mapping_codes[data.currently.icon];
+            var conditionCode = mapping_codes[data.currently.icon];
+            if (conditionCode === undefined)
+                conditionCode = Conditions.Unknown;
             var temp = data.currently.temperature;
             var weather = {
                 temperatureC: temp,
@@ -30,7 +32,7 @@ export function fetchWeather(apiKey, latitude, longitude) {
                 location: "",
                 description: data.currently.summary,
                 isDay: data.currently.time > data.daily.data[0].sunriseTime && data.currently.time < data.daily.data[0].sunsetTime,
-                conditionCode: condition !== undefined ? condition : Conditions.Unknown,
+                conditionCode: conditionCode,
                 realConditionCode: data.currently.icon,
                 sunrise: data.daily.data[0].sunriseTime * 1000,
                 sunset: data.daily.data[0].sunsetTime * 1000,

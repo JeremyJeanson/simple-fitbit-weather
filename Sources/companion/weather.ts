@@ -1,5 +1,5 @@
 import { Weather } from "../common";
-import { Providers } from "./types";
+import { Providers } from "./common";
 import { geolocation, PositionOptions } from "geolocation"
 
 // Import providers

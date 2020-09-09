@@ -18,7 +18,6 @@ const mapping_codes = {
     "520": Conditions.ShowerRain,
     "521": Conditions.ShowerRain,
     "522": Conditions.ShowerRain,
-
     "600": Conditions.Snow,
     "601": Conditions.Snow,
     "602": Conditions.Snow,
@@ -29,20 +28,17 @@ const mapping_codes = {
     "621": Conditions.Snow,
     "622": Conditions.Snow,
     "623": Conditions.Snow,
-
     "700": Conditions.Mist,
     "711": Conditions.Mist,
     "721": Conditions.Mist,
     "731": Conditions.Mist,
     "741": Conditions.Mist,
     "751": Conditions.Mist,
-
     "800": Conditions.ClearSky,
     "801": Conditions.FewClouds,
     "802": Conditions.ScatteredClouds,
     "803": Conditions.BrokenClouds,
     "804": Conditions.BrokenClouds,
-
     "900": Conditions.Unknown
 };
 
@@ -59,8 +55,8 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     return;
                 }
 
-                const condition =  mapping_codes[data.data[0].weather.code];
-
+                let conditionCode = mapping_codes[data.data[0].weather.code];
+                if (conditionCode === undefined) conditionCode = Conditions.Unknown;
                 const temp = data.data[0].temp
 
                 const weather: Weather = {
@@ -69,7 +65,7 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     location: data.data[0].city_name,
                     description: data.data[0].weather.description,
                     isDay: data.data[0].weather.icon.endsWith("d"),
-                    conditionCode: condition !== undefined ? condition : Conditions.Unknown,
+                    conditionCode: conditionCode,
                     realConditionCode: data.data[0].weather.code,
                     sunrise: data.data[0].sunrise,
                     sunset: data.data[0].sunset,

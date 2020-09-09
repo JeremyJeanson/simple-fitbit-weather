@@ -11,7 +11,7 @@
     "typescript": "^4.0.2"
   },
   "scripts": {
-    "build":"@powershell Copy-Item -Path ./package.json,../README.md -Destination ../distribution/ && tsc --build",
+    "build": "@powershell Copy-Item -Path ./package.json,../README.md,../LICENSE -Destination ../distribution/ && tsc --build",
     "clean": "tsc --build --clean"
   }
 }
