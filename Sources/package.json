@@ -1,6 +1,6 @@
 {
   "name": "simple-fitbit-weather",
-  "version": "0.0.1-alpha4",
+  "version": "0.0.1-alpha5",
   "description": "Include Weather inside your Fitbit OS application",
   "author": "Jérémy Jeanson (https://www.bugshunter.net)",
   "license": "MIT",
