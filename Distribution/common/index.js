@@ -31,7 +31,7 @@ export var Conditions = {
     Thunderstorm: 6,
     Snow: 7,
     Mist: 8,
-    Unknown: 999999999,
+    Unknown: 9,
 };
 /**
  * Message type (used in socket messages)
