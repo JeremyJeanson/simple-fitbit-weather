@@ -1,9 +1,4 @@
 /**
- * Trace (for debug mod)
- * @param message to show in the console
- */
-export declare function trace(message: any): void;
-/**
  * File name
  */
 export declare const WEATHER_FILE = "weather.cbor";

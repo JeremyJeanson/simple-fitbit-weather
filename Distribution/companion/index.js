@@ -3,7 +3,8 @@ import { outbox } from "file-transfer";
 import * as cbor from "cbor";
 import * as messaging from "messaging";
 import { localStorage } from "local-storage";
-import { trace, WEATHER_FILE, MESSAGE_TYPE } from "../common";
+import { WEATHER_FILE, MESSAGE_TYPE } from "../common";
+import { trace } from "./common";
 import * as weatherClient from "./weather";
 // Export to allow companion app to use common types
 export { Providers } from "./common";
@@ -19,20 +20,21 @@ export function initialize(configuration) {
     // Save the configuration
     _configuration = configuration;
     // Chek persissions
-    // if (companion.permissions.granted("run_background")) {
-    //     // Check interval
-    //     if (_configuration.refreshInterval >= 5) {
-    //         // We are not allow to have an interval bellow 5
-    //         // Set periodic refresh (interfval as minutes)
-    //         companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
-    //         companion.addEventListener("wakeinterval", (e) => refresh());
-    //     }
-    // } else {
-    //     console.warn("We're not allowed to access to run in the background!");
-    // }
+    if (companion.permissions.granted("run_background")) {
+        // Check interval
+        if (_configuration.refreshInterval >= 5) {
+            // We are not allow to have an interval bellow 5
+            // Set periodic refresh (interfval as minutes)
+            companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
+            companion.addEventListener("wakeinterval", function () { return refresh(); });
+        }
+    }
+    else {
+        console.warn("We're not allowed to access to run in the background!");
+    }
     try {
         companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
-        companion.addEventListener("wakeinterval", function (e) { return refresh(); });
+        companion.addEventListener("wakeinterval", function () { return refresh(); });
     }
     catch (ex) {
         trace(ex);

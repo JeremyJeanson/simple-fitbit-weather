@@ -54,15 +54,15 @@ const mapping_codes = {
 
 export function fetchWeather(apiKey: string, latitude: number, longitude: number): Promise<Weather> {
     return new Promise<Weather>((resolve, reject) => {
-        const url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude
+        const url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;
 
         fetch(encodeURI(url))
             .then(response => response.json())
             .then(data => {
 
                 if (data.weather === undefined) {
-                    reject(data.message)
-                    return
+                    reject(data.message);
+                    return;
                 }
 
                 let conditionCode = mapping_codes[data.weather[0].id];
@@ -79,11 +79,11 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     sunrise: data.sys.sunrise * 1000,
                     sunset: data.sys.sunset * 1000,
                     timestamp: Date.now()
-                }
+                };
 
                 // Send the weather data to the device
-                resolve(weather)
+                resolve(weather);
             })
-            .catch(e => reject(e.message))
+            .catch(e => reject(e.message));
     });
 }

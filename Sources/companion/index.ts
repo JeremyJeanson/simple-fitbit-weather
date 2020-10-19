@@ -3,8 +3,8 @@ import { outbox } from "file-transfer";
 import * as cbor from "cbor";
 import * as messaging from "messaging";
 import { localStorage } from "local-storage";
-import { trace, WEATHER_FILE, Weather, Message, MESSAGE_TYPE } from "../common";
-import { Configuration, Providers } from "./common";
+import { WEATHER_FILE, Weather, Message, MESSAGE_TYPE } from "../common";
+import { trace, Configuration, Providers } from "./common";
 import * as weatherClient from "./weather";
 
 // Export to allow companion app to use common types
@@ -20,27 +20,27 @@ let _configuration: Configuration;
  * Initialize the module
  * @param configuration to use with the weather API
  */
-export function initialize(configuration: Configuration) {
+export function initialize(configuration: Configuration): void {
     // Save the configuration
     _configuration = configuration;
 
     // Chek persissions
-    // if (companion.permissions.granted("run_background")) {
-    //     // Check interval
-    //     if (_configuration.refreshInterval >= 5) {
-    //         // We are not allow to have an interval bellow 5
-    //         // Set periodic refresh (interfval as minutes)
-    //         companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
-    //         companion.addEventListener("wakeinterval", (e) => refresh());
-    //     }
-    // } else {
-    //     console.warn("We're not allowed to access to run in the background!");
-    // }
+    if (companion.permissions.granted("run_background")) {
+        // Check interval
+        if (_configuration.refreshInterval >= 5) {
+            // We are not allow to have an interval bellow 5
+            // Set periodic refresh (interfval as minutes)
+            companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
+            companion.addEventListener("wakeinterval", () => refresh());
+        }
+    } else {
+        console.warn("We're not allowed to access to run in the background!");
+    }
     try {
         companion.wakeInterval = MILLISECONDS_PER_MINUTE * _configuration.refreshInterval;
-        companion.addEventListener("wakeinterval", (e) => refresh());
-    } catch(ex) {
-        trace(ex)
+        companion.addEventListener("wakeinterval", () => refresh());
+    } catch (ex) {
+        trace(ex);
     }
 
     // Call the refresh
@@ -50,7 +50,7 @@ export function initialize(configuration: Configuration) {
 /**
  * Refresh weather data
  */
-export function refresh() {
+export function refresh(): void {
     // load the weather from file
     const cachedWeather = loadCache();
 

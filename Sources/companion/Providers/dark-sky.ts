@@ -15,23 +15,23 @@ const mapping_codes = {
 
 export function fetchWeather(apiKey: string, latitude: number, longitude: number): Promise<Weather> {
     return new Promise<Weather>((resolve, reject) => {
-        const url = 'https://api.darksky.net/forecast/' + apiKey + '/' + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=si'
+        const url = 'https://api.darksky.net/forecast/' + apiKey + '/' + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=si';
 
-        console.log(url)
+        console.log(url);
 
         fetch(encodeURI(url))
             .then(response => response.json())
             .then(data => {
 
                 if (data.currently === undefined) {
-                    reject(data)
-                    return
+                    reject(data);
+                    return;
                 }
 
                 let conditionCode = mapping_codes[data.currently.icon];
                 if (conditionCode === undefined) conditionCode = Conditions.Unknown;
 
-                const temp = data.currently.temperature
+                const temp = data.currently.temperature;
 
                 const weather: Weather = {
                     temperatureC: temp,
@@ -47,24 +47,24 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                 };
 
                 // retreiving location name from Open Street Map
-                const url = 'https://nominatim.openstreetmap.org/reverse?lat=' + latitude + '&lon=' + longitude + '&format=json&accept-language=en-US'
+                const url = 'https://nominatim.openstreetmap.org/reverse?lat=' + latitude + '&lon=' + longitude + '&format=json&accept-language=en-US';
 
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
 
-                        if (data.address.hamlet != undefined) weather.location = data.address.hamlet
-                        else if (data.address.village != undefined) weather.location = data.address.village
-                        else if (data.address.town != undefined) weather.location = data.address.town
-                        else if (data.address.city != undefined) weather.location = data.address.city
+                        if (data.address.hamlet != undefined) weather.location = data.address.hamlet;
+                        else if (data.address.village != undefined) weather.location = data.address.village;
+                        else if (data.address.town != undefined) weather.location = data.address.town;
+                        else if (data.address.city != undefined) weather.location = data.address.city;
 
                         // Send the weather data to the device
-                        resolve(weather)
+                        resolve(weather);
                     })
                     .catch(() => {
-                        resolve(weather) // if location name not found - sending weather without location
-                    })
+                        resolve(weather); // if location name not found - sending weather without location
+                    });
             })
-            .catch(e => reject(e.message))
-    })
+            .catch(e => reject(e.message));
+    });
 }

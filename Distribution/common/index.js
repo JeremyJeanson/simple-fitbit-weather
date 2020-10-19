@@ -1,11 +1,4 @@
 /**
- * Trace (for debug mod)
- * @param message to show in the console
- */
-export function trace(message) {
-    // console.warn(JSON.stringify(message));
-}
-/**
  * File name
  */
 export var WEATHER_FILE = "weather.cbor";

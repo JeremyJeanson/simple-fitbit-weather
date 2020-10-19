@@ -44,10 +44,10 @@ const mapping_codes = {
 
 export function fetchWeather(apiKey: string, latitude: number, longitude: number): Promise<Weather> {
     return new Promise<Weather>((resolve, reject) => {
-        const url = 'https://api.weatherbit.io/v2.0/current?key=' + apiKey + '&lat=' + latitude + '&lon=' + longitude
+        const url = 'https://api.weatherbit.io/v2.0/current?key=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;
 
         fetch(encodeURI(url))
-            .then((response) => { return response.json() })
+            .then((response) => { return response.json(); })
             .then(data => {
 
                 if (data.data === undefined || data.count !== 1) {
@@ -57,7 +57,7 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
 
                 let conditionCode = mapping_codes[data.data[0].weather.code];
                 if (conditionCode === undefined) conditionCode = Conditions.Unknown;
-                const temp = data.data[0].temp
+                const temp = data.data[0].temp;
 
                 const weather: Weather = {
                     temperatureC: temp,
@@ -70,11 +70,11 @@ export function fetchWeather(apiKey: string, latitude: number, longitude: number
                     sunrise: data.data[0].sunrise,
                     sunset: data.data[0].sunset,
                     timestamp: Date.now()
-                }
+                };
 
                 // Send the weather data to the device
-                resolve(weather)
+                resolve(weather);
             })
-            .catch(e => reject(e.message))
-    })
+            .catch(e => reject(e.message));
+    });
 }

@@ -1,9 +1,16 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { inbox } from "file-transfer";
 import * as messaging from "messaging";
-import { trace, WEATHER_FILE, MESSAGE_TYPE } from "../common";
+import { WEATHER_FILE, MESSAGE_TYPE } from "../common";
 // Callback to send data to the application
 var _callback;
+/**
+* Trace (for debug mod)
+* @param message to show in the console
+*/
+export function trace(message) {
+    console.warn(JSON.stringify(message));
+}
 /**
  * Initialize the module
  * @param callback when weater data are available

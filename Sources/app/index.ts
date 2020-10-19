@@ -1,13 +1,21 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { inbox } from "file-transfer";
 import * as messaging from "messaging";
-import { trace, WEATHER_FILE, Weather, Message, MESSAGE_TYPE } from "../common";
+import { WEATHER_FILE, Weather, Message, MESSAGE_TYPE } from "../common";
 
 // Export to allow device app to use common types
 export { Weather } from "../common";
 
 // Callback to send data to the application
 let _callback: (data: Weather) => void;
+
+/**
+* Trace (for debug mod)
+* @param message to show in the console
+*/
+export function trace(message: unknown): void {
+    console.warn(JSON.stringify(message));
+}
 
 /**
  * Initialize the module

@@ -1,6 +1,6 @@
 import { Weather } from "../common";
 import { Providers } from "./common";
-import { geolocation, PositionOptions } from "geolocation"
+import { geolocation, PositionOptions } from "geolocation";
 
 // Import providers
 import * as openWMWeatherMap from "./Providers/open-weather-map";
@@ -12,22 +12,22 @@ const fetchFuncs = {
     [Providers.openweathermap]: openWMWeatherMap.fetchWeather,
     [Providers.darksky]: darkskyWeather.fetchWeather,
     [Providers.weatherbit]: weatherbit.fetchWeather
-}
+};
 
 // Get weather
 export function fetchWeather(provider: Providers, apiKey: string): Promise<Weather> {
     // Create a promise to return
     return new Promise<Weather>((resolve, reject) => {
         // Check the provider to use
-        const fetchFunc = fetchFuncs[provider]
+        const fetchFunc = fetchFuncs[provider];
         if (fetchFunc === undefined) {
             reject('Unsupported provider');
             return;
         }
 
         // Set geolocation options
-        const positionOptions : PositionOptions ={
-            enableHighAccuracy:false,
+        const positionOptions: PositionOptions = {
+            enableHighAccuracy: false,
             maximumAge: 1000 * 1800
         };
 
@@ -35,11 +35,11 @@ export function fetchWeather(provider: Providers, apiKey: string): Promise<Weath
         geolocation.getCurrentPosition(
             (position) => {
                 fetchFunc(apiKey, position.coords.latitude, position.coords.longitude)
-                  .then(resolve)
-                  .catch(reject)
-              },
-              reject, 
-              positionOptions
+                    .then(resolve)
+                    .catch(reject);
+            },
+            reject,
+            positionOptions
         );
     });
 }
