@@ -11,6 +11,5 @@ export function trace(message) {
 export var Providers;
 (function (Providers) {
     Providers["openweathermap"] = "owm";
-    Providers["darksky"] = "darksky";
     Providers["weatherbit"] = "weatherbit";
 })(Providers || (Providers = {}));

@@ -3,12 +3,10 @@ import { Providers } from "./common";
 import { geolocation } from "geolocation";
 // Import providers
 import * as openWMWeatherMap from "./Providers/open-weather-map";
-import * as darkskyWeather from "./Providers/dark-sky";
 import * as weatherbit from "./Providers/weatherbit";
 // Functions of supported providers
 var fetchFuncs = (_a = {},
     _a[Providers.openweathermap] = openWMWeatherMap.fetchWeather,
-    _a[Providers.darksky] = darkskyWeather.fetchWeather,
     _a[Providers.weatherbit] = weatherbit.fetchWeather,
     _a);
 // Get weather

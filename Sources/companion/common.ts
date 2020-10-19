@@ -11,7 +11,6 @@ export function trace(message: unknown): void {
  */
 export enum Providers {
     openweathermap = "owm",
-    darksky = "darksky",
     weatherbit = "weatherbit"
 }
 /**

@@ -8,7 +8,6 @@ export declare function trace(message: unknown): void;
  */
 export declare enum Providers {
     openweathermap = "owm",
-    darksky = "darksky",
     weatherbit = "weatherbit"
 }
 /**

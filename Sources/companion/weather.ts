@@ -4,13 +4,11 @@ import { geolocation, PositionOptions } from "geolocation";
 
 // Import providers
 import * as openWMWeatherMap from "./Providers/open-weather-map";
-import * as darkskyWeather from "./Providers/dark-sky";
 import * as weatherbit from "./Providers/weatherbit";
 
 // Functions of supported providers
 const fetchFuncs = {
     [Providers.openweathermap]: openWMWeatherMap.fetchWeather,
-    [Providers.darksky]: darkskyWeather.fetchWeather,
     [Providers.weatherbit]: weatherbit.fetchWeather
 };
 
