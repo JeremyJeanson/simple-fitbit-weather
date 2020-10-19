@@ -48,10 +48,15 @@ jobs:
       #     name: fitbit-sdk-extenson
       #     path: ./Distribution/*.tgz
 
-      # Publish to the marketplace
+      # Publish to npm js
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
       - name: Publish
         if: ${{ success() }}
         working-directory: ./Distribution
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
