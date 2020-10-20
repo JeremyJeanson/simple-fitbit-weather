@@ -42,6 +42,9 @@ const mapping_codes = {
     "900": Conditions.Unknown
 };
 
+/**
+ * Fetch data from Weather bit 
+ */
 export function fetchWeather(apiKey: string, latitude: number, longitude: number): Promise<Weather> {
     return new Promise<Weather>((resolve, reject) => {
         const url = 'https://api.weatherbit.io/v2.0/current?key=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;

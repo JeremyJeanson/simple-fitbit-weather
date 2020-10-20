@@ -50,6 +50,9 @@ var mapping_codes = {
     803: Conditions.BrokenClouds,
     804: Conditions.BrokenClouds
 };
+/**
+ * Fetch data from Open Weather Map
+ */
 export function fetchWeather(apiKey, latitude, longitude) {
     return new Promise(function (resolve, reject) {
         var url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;

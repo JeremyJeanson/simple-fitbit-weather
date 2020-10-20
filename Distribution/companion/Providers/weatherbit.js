@@ -40,6 +40,9 @@ var mapping_codes = {
     "804": Conditions.BrokenClouds,
     "900": Conditions.Unknown
 };
+/**
+ * Fetch data from Weather bit
+ */
 export function fetchWeather(apiKey, latitude, longitude) {
     return new Promise(function (resolve, reject) {
         var url = 'https://api.weatherbit.io/v2.0/current?key=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;

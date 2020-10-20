@@ -12,7 +12,7 @@ The main differences are :
 - Periodic update is made by the companion app.
 - The companion app refresh weather data when the user opens the mobile application.
 - It is built with TypeScript.
-- It includes types definitions.
+- It includes types definitions and comments to show documentation in Visual Studio Code.
 - Weather providers are declared in specific files (you could pull request to add new providers with less impact on the existing code).
 
 ## Providers and Data format

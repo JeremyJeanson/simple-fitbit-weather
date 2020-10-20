@@ -4,12 +4,18 @@ import { geolocation } from "geolocation";
 // Import providers
 import * as openWMWeatherMap from "./Providers/open-weather-map";
 import * as weatherbit from "./Providers/weatherbit";
-// Functions of supported providers
+/**
+ * Functions of supported providers
+ */
 var fetchFuncs = (_a = {},
     _a[Providers.openweathermap] = openWMWeatherMap.fetchWeather,
     _a[Providers.weatherbit] = weatherbit.fetchWeather,
     _a);
-// Get weather
+/**
+ * Get weather
+ * @param provider
+ * @param apiKey
+ */
 export function fetchWeather(provider, apiKey) {
     // Create a promise to return
     return new Promise(function (resolve, reject) {

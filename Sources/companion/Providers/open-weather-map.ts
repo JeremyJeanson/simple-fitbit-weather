@@ -52,6 +52,9 @@ const mapping_codes = {
     804: Conditions.BrokenClouds
 };
 
+/**
+ * Fetch data from Open Weather Map 
+ */
 export function fetchWeather(apiKey: string, latitude: number, longitude: number): Promise<Weather> {
     return new Promise<Weather>((resolve, reject) => {
         const url = 'https://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&lat=' + latitude + '&lon=' + longitude;

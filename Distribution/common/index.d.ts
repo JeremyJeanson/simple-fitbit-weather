@@ -32,14 +32,44 @@ export declare const Conditions: {
  * Weather data
  */
 export interface Weather {
+    /**
+     * Temperature as °C
+     */
     temperatureC: number;
+    /**
+     * Temperature as °K
+     */
     temperatureF: number;
+    /**
+     * Location found
+     */
     location: string;
+    /**
+     * Full description of weather sitation
+     */
     description: string;
+    /**
+     * Situation for the full day
+     */
     isDay: boolean;
+    /**
+     * Condition code, refre to ths Conditions const
+     */
     conditionCode: number;
+    /**
+     * Code of the real condition
+     */
     realConditionCode: string;
+    /**
+     * Date of sunrise
+     */
     sunrise: number;
+    /**
+     * Date of sunset
+     */
     sunset: number;
+    /**
+     * Date of curretn data
+     */
     timestamp: number;
 }

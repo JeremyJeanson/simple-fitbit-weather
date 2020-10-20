@@ -13,6 +13,7 @@ export enum Providers {
     openweathermap = "owm",
     weatherbit = "weatherbit"
 }
+
 /**
  * Companion configuration
  */
