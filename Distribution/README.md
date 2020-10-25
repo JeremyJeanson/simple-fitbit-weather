@@ -82,7 +82,7 @@ weather.initialize({
 });
 ```
 
-## 3. Initialize the device app
+## 4. Initialize the device app
 Import the module and call the `initialize` method.
 
 Exemple :
@@ -117,7 +117,7 @@ export interface Weather {
 }
 ```
 
-## 4. Manual access to the last data
+## 5. Manual access to the last data
 If you have to do periodic calculations, you could request access to last weather out of the `applyWeather` callback.
 
 To make it easier, this module exposes a property `last` of type `Weather`.
