@@ -1,6 +1,11 @@
 import { Weather } from "../common";
 export { Weather } from "../common";
 /**
+ * Last weather data
+ * undefined when the weather has never been sent
+ */
+export declare let last: Weather | undefined;
+/**
 * Trace (for debug mod)
 * @param message to show in the console
 */

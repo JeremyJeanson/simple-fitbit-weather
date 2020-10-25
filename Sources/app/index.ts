@@ -10,6 +10,12 @@ export { Weather } from "../common";
 let _callback: (data: Weather) => void;
 
 /**
+ * Last weather data
+ * undefined when the weather has never been sent
+ */
+export let last: Weather | undefined;
+
+/**
 * Trace (for debug mod)
 * @param message to show in the console
 */
@@ -53,7 +59,7 @@ messaging.peerSocket.addEventListener("message", (e) => {
         catch (ex) {
             trace(ex);
         }
-        _callback(message.weather);
+        setWeather(message.weather);
     }
 });
 
@@ -63,7 +69,7 @@ messaging.peerSocket.addEventListener("message", (e) => {
 function load() {
     // load the weather from file
     // && Notify the application
-    _callback(loadFile());
+    setWeather(loadFile());
 }
 
 /**
@@ -83,4 +89,13 @@ export function loadFile(): Weather {
         trace(ex);
     }
     return undefined;
+}
+
+/**
+ * Set the last weather and use the callback
+ * @param data 
+ */
+function setWeather(data: Weather) {
+    last = data;
+    _callback(data);
 }

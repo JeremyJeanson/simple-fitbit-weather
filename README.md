@@ -116,6 +116,14 @@ export interface Weather {
     timestamp: number;
 }
 ```
+
+## 4. Manual access to the last data
+If you have to do periodic calculations, you could request access to last weather out of the `applyWeather` callback.
+
+To make it easier, this module exposes a property `last` of type `Weather`.
+
+It is `undefined` if none data are available.
+
 ## Compatibility with weather-bit
 Conditions, providers, and weather data an prodiver list are similar to [fitbit-weather](https://github.com/gregoiresage/fitbit-weather) to simplify acces for Javascript developers.
 

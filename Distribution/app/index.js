@@ -5,6 +5,11 @@ import { WEATHER_FILE, MESSAGE_TYPE } from "../common";
 // Callback to send data to the application
 var _callback;
 /**
+ * Last weather data
+ * undefined when the weather has never been sent
+ */
+export var last;
+/**
 * Trace (for debug mod)
 * @param message to show in the console
 */
@@ -45,7 +50,7 @@ messaging.peerSocket.addEventListener("message", function (e) {
         catch (ex) {
             trace(ex);
         }
-        _callback(message.weather);
+        setWeather(message.weather);
     }
 });
 /**
@@ -54,7 +59,7 @@ messaging.peerSocket.addEventListener("message", function (e) {
 function load() {
     // load the weather from file
     // && Notify the application
-    _callback(loadFile());
+    setWeather(loadFile());
 }
 /**
  * Load file if available
@@ -73,4 +78,12 @@ export function loadFile() {
         trace(ex);
     }
     return undefined;
+}
+/**
+ * Set the last weather and use the callback
+ * @param data
+ */
+function setWeather(data) {
+    last = data;
+    _callback(data);
 }
