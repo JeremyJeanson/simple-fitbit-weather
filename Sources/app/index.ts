@@ -10,8 +10,8 @@ export { Weather } from "../common";
 let _callback: (data: Weather) => void;
 
 /**
- * Last weather data
- * undefined when the weather has never been sent
+ * Last weather data,
+ * This property is 'undefined' when the weather has never been sent.
  */
 export let last: Weather | undefined;
 

@@ -5,8 +5,8 @@ import { WEATHER_FILE, MESSAGE_TYPE } from "../common";
 // Callback to send data to the application
 var _callback;
 /**
- * Last weather data
- * undefined when the weather has never been sent
+ * Last weather data,
+ * This property is 'undefined' when the weather has never been sent.
  */
 export var last;
 /**

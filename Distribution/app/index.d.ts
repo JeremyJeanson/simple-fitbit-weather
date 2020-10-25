@@ -1,8 +1,8 @@
 import { Weather } from "../common";
 export { Weather } from "../common";
 /**
- * Last weather data
- * undefined when the weather has never been sent
+ * Last weather data,
+ * This property is 'undefined' when the weather has never been sent.
  */
 export declare let last: Weather | undefined;
 /**
